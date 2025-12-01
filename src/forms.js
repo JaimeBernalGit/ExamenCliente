@@ -9,11 +9,12 @@ const handleFillCountry = _.debounce((ev) => {
     console.log(`search for ${inputText}`);
 
     for (let country of countryList) {
+        if (country.toLowerCase().includes(inputText)){
         let row = document.createElement('div')
         row.innerText = country
         row.onclick = selectCountry
-
         node.appendChild(row)
+        }
     }
   }, 300);
 
@@ -21,8 +22,16 @@ const handleFillCountry = _.debounce((ev) => {
 function validateName(event) {
     const name = event.target.value
     console.log('validate name: ' + name);
-
-    return false
+    if(name.length <= 8 || name == ""){
+        hideElementWithClassName(event.target, 'valid-feedback')
+        showElementWithClassName(event.target, 'invalid-feedback')
+        return false
+    }else{
+        hideElementWithClassName(event.target, 'invalid-feedback')
+        showElementWithClassName(event.target, 'valid-feedback')
+        return true
+    }
+    
 }
 
 function validatePassword(event) {
@@ -32,13 +41,29 @@ function validatePassword(event) {
     // should contains at least one number
     // otherwise, password is invalid
     const password = event.target.value
-    return false
+    
+    if(password.length <= 8 || password == ""){
+        hideElementWithClassName(event.target, 'valid-feedback')
+        showElementWithClassName(event.target, 'invalid-feedback')
+        return false
+    }else{
+        hideElementWithClassName(event.target, 'invalid-feedback')
+        showElementWithClassName(event.target, 'valid-feedback')
+        return true
+    }
 }
 
 function validateEmail(event) {
     const email = event.target.value
-
-    return false
+    if(email == "" || !email.includes("@") || email.startsWith("@") || email.endsWith("@")){
+        hideElementWithClassName(event.target, 'valid-feedback')
+        showElementWithClassName(event.target, 'invalid-feedback')
+        return false
+    }else{
+        hideElementWithClassName(event.target, 'invalid-feedback')
+        showElementWithClassName(event.target, 'valid-feedback')
+        return true
+    }
 }
 
 
